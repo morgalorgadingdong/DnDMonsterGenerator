@@ -31,49 +31,36 @@ let crMode
 
 const url = `https://www.dnd5eapi.co/api/monsters/`
 
-// localStorage.clear()
 
 
-//If local storage is empty, 
-if (localStorage.getItem("url 0") === null) {
-    loadData()
-} else {
-    let temp = Object.values(localStorage)
-    temp.forEach(el => {
-        if (el.charAt(0) == '/') {
-            monsterList.push(el)
-        } else if (el.charAt(0) == '{') {
-            monsterArray.push(JSON.parse(el))
-        } else {
-            console.log('check local storage for anomaly')
+if (localStorage.getItem("0") === null) {
+    fetch(url)
+        .then(res => res.json()) // parse response as JSON
+        .then(data => { 
+            for (const key in data.results) {
+                localStorage.setItem(counter, data.results[key].url)
+                counter++
         }
     })
 }
 
-console.log(monsterArray)
-
-async function loadData() {
-    let response = await fetch(url)
-    const data = await response.json();
-    for (const key in data.results) {
-        localStorage.setItem(`url ${counter}`, data.results[key].url)
-        counter++
-    }
-    monsterList = Object.values(localStorage)
-    await Promise.all(monsterList.map(async (el) => {
-        let url = `https://www.dnd5eapi.co${el}`
-        let response = await fetch(url)
-        const data = await response.json();    
-        localStorage.setItem(`monster ${counter}`, JSON.stringify(data))
-        monsterArray.push(data)
-        counter++
-    }))
-}
-    
+monsterList = Object.values(localStorage)
+console.log(monsterList)
 
 document.getElementById('fetchRandomBTN').addEventListener('click', getFetchRandom)
 document.getElementById('fetchAllBTN').addEventListener('click', getFetchAll)
 document.getElementById('clearBTN').addEventListener('click', clear)
+// document.getElementsByClassName('filterBTN').addEventListener('click', activateFilter)
+// document.getElementsByClassName('filterBTNClicked').addEventListener('click', deactivateFilter)
+
+function activateFilter() {
+    // x.classList.add("filterBTNClicked")
+}
+
+function deactivateFilter() {
+    // console.log(x)
+    
+}
 
 function clear() {
     const parentId = 'monsterContainer';
@@ -87,13 +74,19 @@ function clear() {
 }
 
 async function getFetchRandom(){
-    //If monsterList has not already been defined off of the 
-    // if (monsterList.length < 1) {
-    //     monsterList = Object.values(localStorage)
-    //     console.log(monsterList)
-    // }
+    monsterArray = []
+    if (monsterList.length < 1) {
+        monsterList = Object.values(localStorage)
+        console.log(monsterList)
+    }
     
-    //Create a new array (monsterArrayRandom) filtered against filter criteria
+    await Promise.all(monsterList.map(async (el) => {
+        let url = `https://www.dnd5eapi.co${el}`
+        let response = await fetch(url)
+        const data = await response.json();    
+        monsterArray.push(data)
+    }))
+
     monsterArray.forEach(el => {
         let monsterCR = el.challenge_rating
         let monsterType = el.type
@@ -103,7 +96,6 @@ async function getFetchRandom(){
         }
     })
     
-    //
     if (monsterArrayRandom.length > 0) {
         let num = Math.floor(Math.random() * monsterArrayRandom.length)
         const li = document.createElement('li')
@@ -116,10 +108,18 @@ async function getFetchRandom(){
 }
 
 async function getFetchAll(){
-    // if (monsterList.length < 1) {
-    //     monsterList = Object.values(localStorage)
-    //     console.log(monsterList)
-    // }
+    if (monsterList.length < 1) {
+        monsterList = Object.values(localStorage)
+        console.log(monsterList)
+    }
+    
+    //IN PARALLEL
+    await Promise.all(monsterList.map(async (el) => {
+        let url = `https://www.dnd5eapi.co${el}`
+        let response = await fetch(url)
+        const data = await response.json();    
+        monsterArray.push(data)
+    }))
 
     monsterArray.forEach(el => {
         let monsterCR = el.challenge_rating
