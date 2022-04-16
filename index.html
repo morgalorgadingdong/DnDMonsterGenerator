@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    	<meta charset="utf-8">
+    	<meta name="description" content="This is where your description goes">
+    	<meta name="keywords" content="one, two, three">
+
+		<title>D&D 5e Monster Browser</title>
+
+		<!-- external CSS link -->
+		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/style.css">
+	</head>
+	<body>
+
+		<div class="wrapper">
+
+		<h1>D&D 5e Monster Generator</h1>
+		
+
+		<div class="ayyydee center">
+			<h3>Filters</h3>
+			<label for="challenge">Challenge Rating (0-30):</label>
+			<input type="number" id="challenge" name="challenge" min="0" max="30">
+			<button>Equal to</button>
+			<button>Min</button>
+			<button>Max</button>
+			<h4>Type</h4>
+			<div class="flex wrap btnListConstainer">
+				<button>Aberration</button>
+				<button>Beast</button>
+				<button>Celestial</button>
+				<button>Construct</button>
+				<button>Dragon</button>
+				<button>Elemental</button>
+				<button>Fey</button>
+				<button>Fiend</button>
+				<button>Giant</button>
+				<button>Humanoid</button>
+				<button>Monstrosity</button>
+				<button>Ooze</button>
+				<button>Plant</button>
+				<button>Undead</button>
+			</div>
+			<h4>Size</h4>
+			<div class="flex wrap">
+				<button>Tiny</button>
+				<button>Small</button>
+				<button>Medium</button>
+				<button>Large</button>
+				<button>Huge</button>
+				<button>Gargantuan</button>
+			</div>
+   	 	</div>
+
+			<div class="ayyydee center flex" id="btnContainer">
+				<button class="center" id="fetchRandomBTN"><h3>Fetch me a random monster!</h3></button>
+				<button class="center" id="fetchAllBTN"><h3>Show me all the relevant Monsters!</h3></button>
+			</div>
+			<button class="center ayyydee" id="clearBTN"><h3>Clear results</h3></button>
+		
+		
+		<ul id="monsterContainer" class="ayyydee center">
+		</ul>
+
+
+	</div>
+		<script type="text/javascript" src="js/main.js"></script>
+	</body>
+</html>
+
+<!-- THE GRAVEYARD -->
+
+<!-- SEARCH BAR -->
+<!-- <input type="text" name="monsterSearch" value="Search for Monster by Name">
+		<button type="button" name="button">Search</button> -->
+
+<!-- SLIDERS -->
+<!-- <div>
+	<button>Min</button>
+	<button>Max</button>
+	<button>Equal to</button>
+	<input type="range" id="challenge" name="challenge"
+		   min="0" max="30">
+	<label for="challenge">Challenge Rating</label>
+</div>
+<div>
+	<button>Min</button>
+	<button>Max</button>
+	<button>Equal to</button>
+	<input type="range" id="size" name="size"
+		   min="0" max="100">
+	<label for="size">Size</label>
+</div>
+
+<div>
+	<button>Lawful</button>
+	<button>Nuetral</button>
+	<button>Chaotic</button>
+</div>
+<div>
+	<button>Good</button>
+	<button>Nuetral</button>
+	<button>Evil</button>
+</div> -->
+
+
+<!-- DROP DOWN PICKER -->
+<!-- <form action="#">
+				<label for="lang">Type</label>
+				<select name="languages" id="lang">
+				  <option value="javascript"></option>
+				  <option value="php"></option>
+				  <option value="java"></option>
+				  <option value="golang"></option>
+				  <option value="python"></option>
+				  <option value="c#"></option>
+				  <option value="C++"></option>
+				  <option value="erlang"></option>
+				</select>
+				<input type="submit" value="Submit" />
+		  </form> -->

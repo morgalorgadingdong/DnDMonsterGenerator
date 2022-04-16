@@ -1,0 +1,78 @@
+/******************************************
+/* CSS
+/*******************************************/
+
+/* Box Model Hack */
+*{
+  box-sizing: border-box;
+}
+
+/******************************************
+/* LAYOUT
+/*******************************************/
+img{
+  display: block;
+  margin: 0 auto;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ayyydee {
+  width: 80%;
+}
+
+.center {
+  margin: auto;
+}
+
+.flex {
+  display: flex;
+}
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+/******************************************
+/* ADDITIONAL STYLES
+/*******************************************/
+h1 {
+  width: 100%;
+  text-align: center;
+}
+
+#fetchRandomBtn {
+  width: fit-content;
+}
+
+#fetchAllBtn {
+  width: fit-content;
+}
+
+#monsterContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+
+}
+
+.monsterCard {
+  list-style: none;
+  width: 30%;
+  height: 300px;
+  border: 2px solid grey;
+  box-shadow: 5px 5px 5px grey;
+  margin: 10px
+}
+
+.btnListConstainer {
+  justify-content: start;
+}
+
+button {
+  margin: 4px;
+}
