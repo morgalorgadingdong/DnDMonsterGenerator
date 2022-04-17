@@ -1,41 +1,26 @@
-//Onpage load
-//Pull Monsters obj from API
-//Store in Local Storage
-    //Once done, generate button changes color
-
-//User Clicks button
-//Function1 
-//  Parses through monsterList obj, visiting each URL from each result and checking it against the supplied criteria
-//  if criteria is met, function takes that obj and pushes it onto the results object
-//  Once all of the monsters have been checked against the filters, and output array is updated, call second function
-//Function2 - all results
-//add an li for every monster object (up to 10)
-
-//Function3 - random result
-//  let monster count = Count the number of items remaining
-//  monsterIndex = math.floor(math.random() * monster count)
-
 let monsterArray = []
 let monsterArrayRandom = []
 let monsterList = []
 let counter = 0
-let type = ['undead', 'dragon', 'plant']
+let type = []
 let typeAll = false //true, false
-let size = ['small', 'medium']
+let size = []
 let sizeAll = false //true, false
 let challengeRating = 10
 let challengeRatingType = 'max' //equal, min, max
+let challengeRatingAll = true
 let finished
 let length
 let crMode
-
 const url = `https://www.dnd5eapi.co/api/monsters/`
 
-// localStorage.clear()
+// localStorage.clear() //for testing purposes
 
-
-//If local storage is empty, 
-if (localStorage.getItem("url 0") === null) {
+//If local storage is empty, run load data function. Else if local storage has only partially loaded data, clear and re-load it. Else, re-define monsterList and monsterArray based on the data in local storage 
+if (localStorage.length == 0) {
+    loadData()
+} else if (localStorage.length < 664) {
+    localStorage.clear()
     loadData()
 } else {
     let temp = Object.values(localStorage)
@@ -50,7 +35,10 @@ if (localStorage.getItem("url 0") === null) {
     })
 }
 
-console.log(monsterArray)
+document.getElementById('fetchRandomBTN').addEventListener('click', getFetchRandom)
+document.getElementById('fetchAllBTN').addEventListener('click', getFetchAll)
+document.getElementById('clearBTN').addEventListener('click', clear)
+// let idk = document.getElementsByClassName('inactive').addEventListener('click', toggleFilter(idk))
 
 async function loadData() {
     let response = await fetch(url)
@@ -69,11 +57,6 @@ async function loadData() {
         counter++
     }))
 }
-    
-
-document.getElementById('fetchRandomBTN').addEventListener('click', getFetchRandom)
-document.getElementById('fetchAllBTN').addEventListener('click', getFetchAll)
-document.getElementById('clearBTN').addEventListener('click', clear)
 
 function clear() {
     const parentId = 'monsterContainer';
@@ -82,17 +65,10 @@ function clear() {
     for(let i=childNodes.length-1;i >= 0;i--){
         let childNode = childNodes[i];
             childNode.parentNode.removeChild(childNode);
-        }
-    
+        }  
 }
 
 async function getFetchRandom(){
-    //If monsterList has not already been defined off of the 
-    // if (monsterList.length < 1) {
-    //     monsterList = Object.values(localStorage)
-    //     console.log(monsterList)
-    // }
-    
     //Create a new array (monsterArrayRandom) filtered against filter criteria
     monsterArray.forEach(el => {
         let monsterCR = el.challenge_rating
@@ -103,7 +79,7 @@ async function getFetchRandom(){
         }
     })
     
-    //
+    //Use the new filtered array to pull a random obj from
     if (monsterArrayRandom.length > 0) {
         let num = Math.floor(Math.random() * monsterArrayRandom.length)
         const li = document.createElement('li')
@@ -120,8 +96,9 @@ async function getFetchAll(){
     //     monsterList = Object.values(localStorage)
     //     console.log(monsterList)
     // }
-
+    let noMonsters = true
     monsterArray.forEach(el => {
+        
         let monsterCR = el.challenge_rating
         let monsterType = el.type
         let monsterSize = el.size.toLowerCase()
@@ -130,8 +107,12 @@ async function getFetchAll(){
             li.textContent = el.name
             document.querySelector('ul').appendChild(li)
             li.classList.add("monsterCard")
+            noMonsters = false
         }
     })
+    if (noMonsters === true) {
+        alert('No matching monsters')
+    }
     
 
     // 
@@ -160,19 +141,23 @@ async function getFetchAll(){
 
 function checkCR(x) {
     let switchInd = false
-    switch (challengeRatingType) {
-        case 'equal':
-            if (x == challengeRating) {
-                return true
+    if (challengeRatingAll != true) {
+        switch (challengeRatingType) {
+            case 'equal':
+                if (x == challengeRating) {
+                    return true
+                }
+            case 'min':
+                if (x >= challengeRating) {
+                    return true
+                }
+            case 'max':
+                if (x <= challengeRating) {
+                    return true
+                }
             }
-        case 'min':
-            if (x >= challengeRating) {
-                return true
-            }
-        case 'max':
-            if (x <= challengeRating) {
-                return true
-            }
+    } else {
+        return true
     }
 }
 
@@ -182,6 +167,8 @@ function checkType(x) {
         typeInd = true
     } else {
         type.forEach(el => {
+            console.log(el)
+            console.log(x)
             if (el == x) {
                 typeInd = true
             }
@@ -196,6 +183,8 @@ function checkSize(x) {
         sizeInd = true
     } else {
         size.forEach(el => {
+            console.log(el)
+            console.log(x)
             if (el == x) {
                 sizeInd = true
             }
@@ -204,8 +193,39 @@ function checkSize(x) {
     return sizeInd
 }
 
+function filterToggleType(e, btn, color) {
+    let target = e.target,
+        count = +target.dataset.count;
+    
+    if (count === 1) {
+        target.style.backgroundColor = "#7FFF00"
+        type.push(target.innerHTML.toLowerCase())
+        console.log(type)
+        target.dataset.count = 0
+    } else {
+        target.style.backgroundColor = "#FFFFFF"
+        type.splice(target.innerHTML, 1)
+        console.log(type)
+        target.dataset.count = 1
+    }
+  }
 
-
+function filterToggleSize(e, btn, color) {
+    let target = e.target,
+        count = +target.dataset.count;
+    
+    if (count === 1) {
+        target.style.backgroundColor = "#7FFF00"
+        size.push(target.innerHTML.toLowerCase())
+        console.log(size)
+        target.dataset.count = 0
+    } else {
+        target.style.backgroundColor = "#FFFFFF"
+        size.splice(target.innerHTML, 1)
+        console.log(size)
+        target.dataset.count = 1
+    }
+  }
 
 
 

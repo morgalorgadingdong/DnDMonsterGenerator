@@ -77,10 +77,10 @@ button {
   margin: 4px;
 }
 
-.filterBTN {
+.inactive {
   
 }
 
-.filterBTNClicked {
+.active {
   background-color: red;
 }
