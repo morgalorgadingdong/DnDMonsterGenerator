@@ -3,16 +3,19 @@ let monsterArrayRandom = []
 let monsterList = []
 let counter = 0
 let type = []
-let typeAll = false //true, false
+let typeAll = true //true, false
 let size = []
-let sizeAll = false //true, false
-let challengeRating = 10
-let challengeRatingType = 'max' //equal, min, max
+let sizeAll = true //true, false
+let challengeRating1
+let challengeRating2
+let challengeRatingType = 'range' //equal or range
 let challengeRatingAll = true
 let finished
 let length
-let crMode
 const url = `https://www.dnd5eapi.co/api/monsters/`
+
+document.getElementById('challenge1').value = 0
+document.getElementById('challenge2').value = 30
 
 // localStorage.clear() //for testing purposes
 
@@ -38,7 +41,6 @@ if (localStorage.length == 0) {
 document.getElementById('fetchRandomBTN').addEventListener('click', getFetchRandom)
 document.getElementById('fetchAllBTN').addEventListener('click', getFetchAll)
 document.getElementById('clearBTN').addEventListener('click', clear)
-// let idk = document.getElementsByClassName('inactive').addEventListener('click', toggleFilter(idk))
 
 async function loadData() {
     let response = await fetch(url)
@@ -69,6 +71,8 @@ function clear() {
 }
 
 async function getFetchRandom(){
+    monsterArrayRandom = []
+
     //Create a new array (monsterArrayRandom) filtered against filter criteria
     monsterArray.forEach(el => {
         let monsterCR = el.challenge_rating
@@ -81,42 +85,46 @@ async function getFetchRandom(){
     
     //Use the new filtered array to pull a random obj from
     if (monsterArrayRandom.length > 0) {
+        console.log(monsterArrayRandom)
         let num = Math.floor(Math.random() * monsterArrayRandom.length)
-        const li = document.createElement('li')
-        li.textContent = monsterArrayRandom[num].name
-        document.querySelector('ul').appendChild(li)
-        li.classList.add("monsterCard")
+        let randomMonster = monsterArrayRandom[num]
+        buildMonsterCard(randomMonster)
     } else {
         alert('No results. Please adjust your filters and try again')
     }
 }
 
+
+
+function buildMonsterCard(monster) {
+    let li = document.createElement('li')
+    let header = document.createElement('h4')
+    header.textContent = monster.name
+    let subheader = document.createElement('p')
+    subheader.textContent = `${monster.size} ${monster.type}, ${monster.alignment}`
+    let subsubheader = document.createElement('p')
+    subsubheader.textContent = `${monster.challenge_rating}`
+    document.querySelector('ul').appendChild(li)
+    li.classList.add("monsterCard")
+    li.appendChild(header)
+    li.appendChild(subheader)
+    li.appendChild(subsubheader)
+}
+
 async function getFetchAll(){
-    // if (monsterList.length < 1) {
-    //     monsterList = Object.values(localStorage)
-    //     console.log(monsterList)
-    // }
     let noMonsters = true
     monsterArray.forEach(el => {
-        
         let monsterCR = el.challenge_rating
         let monsterType = el.type
         let monsterSize = el.size.toLowerCase()
         if ((checkCR(monsterCR) == true) && (checkType(monsterType) == true) && (checkSize(monsterSize) == true)) {
-            const li = document.createElement('li')
-            li.textContent = el.name
-            document.querySelector('ul').appendChild(li)
-            li.classList.add("monsterCard")
+            buildMonsterCard(el)
             noMonsters = false
         }
     })
     if (noMonsters === true) {
         alert('No matching monsters')
     }
-    
-
-    // 
-
     
     //IN SERIES
     // let count = 0;
@@ -137,28 +145,23 @@ async function getFetchAll(){
     //     }
     //     count++
     // }
+    
 }
 
 function checkCR(x) {
-    let switchInd = false
-    if (challengeRatingAll != true) {
-        switch (challengeRatingType) {
-            case 'equal':
-                if (x == challengeRating) {
-                    return true
-                }
-            case 'min':
-                if (x >= challengeRating) {
-                    return true
-                }
-            case 'max':
-                if (x <= challengeRating) {
-                    return true
-                }
-            }
-    } else {
-        return true
+    let crInd = false
+    challengeRating1 = document.getElementById('challenge1').value
+    if (challengeRatingType == 'equal') {
+        if (x == challengeRating1) {
+            crInd = true
+        }
+    } else if (challengeRatingType == 'range') {
+        challengeRating2 = document.getElementById('challenge2').value
+        if (x >= challengeRating1 && x <= challengeRating2 ) {
+            crInd = true
+        }
     }
+    return crInd
 }
 
 function checkType(x) {
@@ -166,9 +169,8 @@ function checkType(x) {
     if (typeAll == true) {
         typeInd = true
     } else {
+        console.log(type)
         type.forEach(el => {
-            console.log(el)
-            console.log(x)
             if (el == x) {
                 typeInd = true
             }
@@ -183,8 +185,6 @@ function checkSize(x) {
         sizeInd = true
     } else {
         size.forEach(el => {
-            console.log(el)
-            console.log(x)
             if (el == x) {
                 sizeInd = true
             }
@@ -193,44 +193,169 @@ function checkSize(x) {
     return sizeInd
 }
 
+function crRange() {
+    let rangeBtn = document.getElementById('rangeCR')
+    let equalBtn = document.getElementById('equalCR')
+    count = +rangeBtn.dataset.count;
+    if (count === 1) {
+        rangeBtn.classList.add("active")
+        rangeBtn.classList.remove("inactive")
+        challengeRatingType = 'range'
+        rangeBtn.dataset.count = 0
+        document.getElementById('challenge2').disabled = false
+        equalBtn.classList.remove("active")
+        equalBtn.classList.add("inactive")
+        equalBtn.dataset.count = 1
+    }
+}
+
+function crEqual() {
+    let rangeBtn = document.getElementById('rangeCR')
+    let equalBtn = document.getElementById('equalCR')
+    count = +equalBtn.dataset.count;
+    if (count === 1) {
+        equalBtn.classList.add("active")
+        equalBtn.classList.remove("inactive")
+        challengeRatingType = 'equal'
+        equalBtn.dataset.count = 0
+        document.getElementById('challenge2').disabled = true
+        rangeBtn.classList.remove("active")
+        rangeBtn.classList.add("inactive")
+        rangeBtn.dataset.count = 1
+    } 
+}
+
 function filterToggleType(e, btn, color) {
     let target = e.target,
         count = +target.dataset.count;
     
     if (count === 1) {
-        target.style.backgroundColor = "#7FFF00"
+        target.classList.add("active")
+        target.classList.remove("inactive")
         type.push(target.innerHTML.toLowerCase())
-        console.log(type)
         target.dataset.count = 0
+        let typeAllBtn = document.getElementById('typeAllBtn')
+        if (typeAllBtn.dataset.count == 0) {
+            typeAllBtn.classList.remove("active")
+            typeAllBtn.classList.add("inactive")
+            typeAll = false
+            typeAllBtn.dataset.count = 1
+        }
     } else {
-        target.style.backgroundColor = "#FFFFFF"
+        target.classList.remove("active")
+        target.classList.add("inactive")
         type.splice(target.innerHTML, 1)
+        target.dataset.count = 1
+        if (type.length == 0) {
+            let typeAllBtn = document.getElementById('typeAllBtn')
+            typeAllBtn.classList.add("active")
+            typeAllBtn.classList.remove("inactive")
+            typeAll = true
+            typeAllBtn.dataset.count = 0
+        }
+    }
+    console.log(type)
+    console.log(typeAll)
+  }
+
+function filterToggleTypeAll(e, btn, color) {
+    let target = e.target,
+        count = +target.dataset.count;
+
+    if (count === 1) {
+        target.classList.add("active")
+        target.classList.remove("inactive")
+        typeAll = true
+        target.dataset.count = 0
+        clearTypeFilters()
+    } else {
+        target.classList.remove("active")
+        target.classList.add("inactive")
+        typeAll = false
         console.log(type)
         target.dataset.count = 1
     }
-  }
+    console.log(type)
+    console.log(typeAll)
+}
+
+function clearTypeFilters() {
+    let btns = document.getElementsByClassName('typeFilterBtn')
+    for  (i=0; i < btns.length; i++) {
+        if (btns[1].dataset.count = 1) {
+            btns[i].classList.remove('active')
+            btns[i].classList.add('inactive')
+            btns[i].dataset.count = 1
+            type.splice(btns.innerHTML, 1)
+        }
+    }
+}
 
 function filterToggleSize(e, btn, color) {
     let target = e.target,
         count = +target.dataset.count;
     
     if (count === 1) {
-        target.style.backgroundColor = "#7FFF00"
+        target.classList.add("active")
+        target.classList.remove("inactive")
         size.push(target.innerHTML.toLowerCase())
-        console.log(size)
         target.dataset.count = 0
+        let typeAllBtn = document.getElementById('sizeAllBtn')
+        if (typeAllBtn.dataset.count == 0) {
+            typeAllBtn.classList.remove("active")
+            typeAllBtn.classList.add("inactive")
+            sizeAll = false
+            sizeAllBtn.dataset.count = 1
+        }
     } else {
-        target.style.backgroundColor = "#FFFFFF"
+        target.classList.remove("active")
+        target.classList.add("inactive")
         size.splice(target.innerHTML, 1)
-        console.log(size)
         target.dataset.count = 1
+        if (size.length == 0) {
+            let sizeAllBtn = document.getElementById('sizeAllBtn')
+            sizeAllBtn.classList.add("active")
+            sizeAllBtn.classList.remove("inactive")
+            sizeAll = true
+            sizeAllBtn.dataset.count = 0
+        }
     }
+    console.log(size)
+    console.log(sizeAll)
   }
 
+function filterToggleSizeAll(e, btn, color) {
+    let target = e.target,
+        count = +target.dataset.count;
 
+    if (count === 1) {
+        target.classList.add("active")
+        target.classList.remove("inactive")
+        sizeAll = true
+        target.dataset.count = 0
+        clearSizeFilters()
+    } else {
+        target.classList.remove("active")
+        target.classList.add("inactive")
+        sizeAll = false
+        console.log(type)
+        target.dataset.count = 1
+    }
+    console.log(size)
+    console.log(sizeAll)
+}
 
-
-
+function clearSizeFilters() {
+    let btns = document.getElementsByClassName('sizeFilterBtn')
+    for  (i=0; i < btns.length; i++) {
+        if (btns[1].dataset.count = 1) {
+            btns[i].classList.remove('active')
+            btns[i].classList.add('inactive')
+            btns[i].dataset.count = 1
+            size.splice(btns.innerHTML, 1)
+        }
+    }
+}
 
 
 

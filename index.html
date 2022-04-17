@@ -15,50 +15,53 @@
 
 		<div class="wrapper">
 
-		<h1>D&D 5e Monster Generator</h1>
+		<h1 class="seventy">D&D 5e Monster Generator</h1>
 		
 
 		<div class="ayyydee center">
-			<h3>Filters</h3>
-			<label for="challenge">Challenge Rating (0-30):</label>
-			<input type="number" id="challenge" name="challenge" min="0" max="30">
-			<button>Equal to</button>
-			<button>Min</button>
-			<button>Max</button>
+			<h2>Filters</h3>
+			<label for="challenge" id="challengeRatingLabel"><h4>Challenge Rating (0-30):</h4></label>
+			<input type="number" id="challenge1" name="challenge1" min="0" max="30" placeholder="0">
+			<input type="number" id="challenge2" name="challenge2" min="0" max="30" placeholder="30">
+			<button id="rangeCR" class="active" data-count="0" onclick="crRange()">Range</button>
+			<button id="equalCR" class="inactive" data-count="1" onclick="crEqual()">Equal to</button>
 			<h4>Type</h4>
 			<div class="flex wrap btnListConstainer">
-				<button class="inactive" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Aberration</button>
-				<button class="inactive" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Beast</button>
-				<button class="inactive" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Celestial</button>
-				<button class="inactive" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Construct</button>
-				<button class="inactive" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Dragon</button>
-				<button class="inactive" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Elemental</button>
-				<button class="inactive" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Fey</button>
-				<button class="inactive" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Fiend</button>
-				<button class="inactive" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Giant</button>
-				<button class="inactive" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Humanoid</button>
-				<button class="inactive" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Monstrosity</button>
-				<button class="inactive" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Ooze</button>
-				<button class="inactive" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Plant</button>
-				<button class="inactive" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Undead</button>
+				<button id="typeAllBtn" class="active" data-count="0" onclick="filterToggleTypeAll(event, 'button', '#101010')">All</button>
+				<button class="inactive typeFilterBtn" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Aberration</button>
+				<button class="inactive typeFilterBtn" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Beast</button>
+				<button class="inactive typeFilterBtn" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Celestial</button>
+				<button class="inactive typeFilterBtn" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Construct</button>
+				<button class="inactive typeFilterBtn" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Dragon</button>
+				<button class="inactive typeFilterBtn" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Elemental</button>
+				<button class="inactive typeFilterBtn" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Fey</button>
+				<button class="inactive typeFilterBtn" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Fiend</button>
+				<button class="inactive typeFilterBtn" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Giant</button>
+				<button class="inactive typeFilterBtn" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Humanoid</button>
+				<button class="inactive typeFilterBtn" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Monstrosity</button>
+				<button class="inactive typeFilterBtn" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Ooze</button>
+				<button class="inactive typeFilterBtn" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Plant</button>
+				<button class="inactive typeFilterBtn" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Undead</button>
 			</div>
 			<h4>Size</h4>
 			<div class="flex wrap">
-				<button class="inactive" data-count="1" onclick="filterToggleSize(event, 'button', '#101010')">Tiny</button>
-				<button class="inactive" data-count="1" onclick="filterToggleSize(event, 'button', '#101010')">Small</button>
-				<button class="inactive" data-count="1" onclick="filterToggleSize(event, 'button', '#101010')">Medium</button>
-				<button class="inactive" data-count="1" onclick="filterToggleSize(event, 'button', '#101010')">Large</button>
-				<button class="inactive" data-count="1" onclick="filterToggleSize(event, 'button', '#101010')">Huge</button>
-				<button class="inactive" data-count="1" onclick="filterToggleSize(event, 'button', '#101010')">Gargantuan</button>
+				<button id="sizeAllBtn" class="active" data-count="0" onclick="filterToggleSizeAll(event, 'button', '#101010')">All</button>
+				<button class="inactive sizeFilterBtn" data-count="1" onclick="filterToggleSize(event, 'button', '#101010')">Tiny</button>
+				<button class="inactive sizeFilterBtn" data-count="1" onclick="filterToggleSize(event, 'button', '#101010')">Small</button>
+				<button class="inactive sizeFilterBtn" data-count="1" onclick="filterToggleSize(event, 'button', '#101010')">Medium</button>
+				<button class="inactive sizeFilterBtn" data-count="1" onclick="filterToggleSize(event, 'button', '#101010')">Large</button>
+				<button class="inactive sizeFilterBtn" data-count="1" onclick="filterToggleSize(event, 'button', '#101010')">Huge</button>
+				<button class="inactive sizeFilterBtn" data-count="1" onclick="filterToggleSize(event, 'button', '#101010')">Gargantuan</button>
 			</div>
    	 	</div>
 
-			<div class="ayyydee center flex" id="btnContainer">
-				<button class="center" id="fetchRandomBTN"><h3>Fetch me a random Monster</h3></button>
-				<button class="center" id="fetchAllBTN"><h3>Show all relevant Monsters</h3></button>
+			<div class="ayyydee center flex" id="fetchBtnsContainer">
+				<button class="center bigBtn" id="fetchRandomBTN"><h3>Fetch me a random Monster</h3></button>
+				<button class="center bigBtn" id="fetchAllBTN"><h3>Show all relevant Monsters</h3></button>
 			</div>
-			<button class="center ayyydee" id="clearBTN"><h3>Clear Monsters</h3></button>
-		
+			<div class="flexCenterH ayyydee">
+				<button class="bigBtn" id="clearBTN"><h3>Clear Monsters</h3></button>
+			</div>
 		
 		<ul id="monsterContainer" class="ayyydee center">
 		</ul>
