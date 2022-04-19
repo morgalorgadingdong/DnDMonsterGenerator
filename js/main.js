@@ -85,7 +85,6 @@ async function getFetchRandom(){
     
     //Use the new filtered array to pull a random obj from
     if (monsterArrayRandom.length > 0) {
-        console.log(monsterArrayRandom)
         let num = Math.floor(Math.random() * monsterArrayRandom.length)
         let randomMonster = monsterArrayRandom[num]
         buildMonsterCard(randomMonster)
@@ -123,7 +122,7 @@ async function getFetchAll(){
         }
     })
     if (noMonsters === true) {
-        alert('No matching monsters')
+        alert('No results. Please adjust your filters and try again')
     }
     
     //IN SERIES
@@ -169,7 +168,6 @@ function checkType(x) {
     if (typeAll == true) {
         typeInd = true
     } else {
-        console.log(type)
         type.forEach(el => {
             if (el == x) {
                 typeInd = true
