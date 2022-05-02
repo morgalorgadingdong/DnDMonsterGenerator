@@ -14,7 +14,12 @@ html {
   height: 100%;
   font-family: 'Heebo', sans-serif !important;
   font-family: 'ZCOOL XiaoWei', serif;
-  background-color: #E7E7DB;
+  background-color: black;
+  z-index: -1;
+}
+
+body {
+
 }
 
 /******************************************
@@ -25,10 +30,18 @@ img{
   margin: 0 auto;
 }
 
+
+
 .wrapper {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  min-height: fit-content;
+  max-height: 100%;
+  background-image:  linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../img/background-1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-bottom: 100px;
 }
 
 .center {
@@ -52,6 +65,10 @@ h1 {
   
   text-align: center;
   border-bottom: #E00D0C solid 3px;
+}
+
+h1, h2, h3, h4, p, span {
+  color: white;
 }
 
 #fetchRandomBtn {
@@ -113,6 +130,16 @@ button {
   
 }
 
+.arrow {
+  box-sizing: border-box;
+  height: 5vw;
+  width: 5vw;
+  border-style: solid;
+  border-color: white;
+  border-width: 0px 1px 1px 0px;
+  transform: rotate(45deg);
+  transition: border-width 150ms ease-in-out;
+}
 
 /******************************************
 /* RELATIVE SIZING */
