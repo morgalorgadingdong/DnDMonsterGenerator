@@ -93,22 +93,42 @@ async function getFetchRandom(){
     }
 }
 
-
-
 function buildMonsterCard(monster) {
     let li = document.createElement('li')
-    let header = document.createElement('h4')
-    header.textContent = monster.name
+    let header = document.createElement('h2')
     let subheader = document.createElement('p')
+    let challengeRating = document.createElement('p')
+    let hitPoints = document.createElement('p')
+    let armorClass = document.createElement('p')
+    let hitDice = document.createElement('p')
+    let lineBreak1 =  document.createElement('div')
+    let lineBreak2 =  document.createElement('div')
+    
+    header.textContent = monster.name
     subheader.textContent = `${monster.size} ${monster.type}, ${monster.alignment}`
-    let subsubheader = document.createElement('p')
-    subsubheader.textContent = `${monster.challenge_rating}`
+    challengeRating.textContent = `CR: ${monster.challenge_rating}`
+    hitPoints.textContent = `Hit Points: ${monster.hit_points}`
+    armorClass.textContent = `Armor Class: ${monster.armor_class}`
+    hitDice.textContent = `Hit Dice: ${monster.hit_dice}`
+
     document.querySelector('ul').appendChild(li)
     li.classList.add("monsterCard")
+    subheader.classList.add("italic")
+    lineBreak1.classList.add("gradientLineRed")
+    lineBreak2.classList.add("gradientLineRed")
     li.appendChild(header)
+    li.appendChild(lineBreak1)
     li.appendChild(subheader)
-    li.appendChild(subsubheader)
+    li.appendChild(challengeRating)
+    li.appendChild(lineBreak2)
+    li.appendChild(hitPoints)
+    li.appendChild(armorClass)
+    li.appendChild(hitDice)
 }
+
+    // "armor_class": 19,
+    // "hit_points": 195,
+    // "hit_dice": "17d12",
 
 async function getFetchAll(){
     let noMonsters = true
@@ -359,6 +379,8 @@ function clearSizeFilters() {
 
 
 
+
+//GRAVEYARD
 // async function getFetchOld(){
     
 //     monsterArray = []
