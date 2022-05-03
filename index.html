@@ -4,11 +4,11 @@
     	<meta charset="utf-8">
     	<meta name="description" content="This is where your description goes">
     	<meta name="keywords" content="one, two, three">
-
+		<meta name="viewport" content="width=device-width, initial-scale=1.25, user-scalable=no" />
 		<title>D&D 5e Monster Browser</title>
 
 		<!-- external CSS link -->
-		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/normalize.css"> 
 		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
@@ -17,15 +17,18 @@
 		<h1 class="seventy">D&D 5e Monster Generator</h1>
 		
 
-		<div class="ayyydee center">
+		<div class="ayyydee center flexCenter">
+			
 			<h2>Filters</h3>
-			<label for="challenge" id="challengeRatingLabel"><h4>Challenge Rating (0-30):</h4></label>
-			<input type="number" id="challenge1" name="challenge1" min="0" max="30" placeholder="0">
-			<input type="number" id="challenge2" name="challenge2" min="0" max="30" placeholder="30">
-			<button id="rangeCR" class="active" data-count="0" onclick="crRange()">Range</button>
-			<button id="equalCR" class="inactive" data-count="1" onclick="crEqual()">Equal to</button>
-			<h4>Type</h4>
-			<div class="flex wrap btnListConstainer">
+			<div id="crFilterContainer" class="flexWrap"><label for="challenge" id="challengeRatingLabel"><h4>Challenge Rating (0-30):</h4></label></div>
+			<div class="flexWrap flexLeft btnListConstainer">
+				<input type="number" id="challenge1" name="challenge1" min="0" max="30" placeholder="0">
+				<input type="number" id="challenge2" name="challenge2" min="0" max="30" placeholder="30">
+				<button id="rangeCR" class="active" data-count="0" onclick="crRange()">Range</button>
+				<button id="equalCR" class="inactive" data-count="1" onclick="crEqual()">Equal to</button>
+			</div>
+			<div id="typeFilterContainer" class="center flexCenterH flexWrap" onclick="toggleFilters(event)" style="cursor: pointer;" data-count="0"><h4>Type</h4><div class="downArrow"></div><div class="upArrow hidden"></div></div>
+			<div class="flex wrap btnListConstainer hidden" id="typesContainer">
 				<button id="typeAllBtn" class="active" data-count="0" onclick="filterToggleTypeAll(event, 'button', '#101010')">All</button>
 				<button class="inactive typeFilterBtn" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Aberration</button>
 				<button class="inactive typeFilterBtn" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Beast</button>
@@ -42,8 +45,8 @@
 				<button class="inactive typeFilterBtn" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Plant</button>
 				<button class="inactive typeFilterBtn" data-count="1" onclick="filterToggleType(event, 'button', '#101010')">Undead</button>
 			</div>
-			<h4>Size</h4>
-			<div class="flex wrap">
+			<div id="sizeFilterContainer" class="center flexCenterH flexWrap" onclick="toggleFilters(event)" style="cursor: pointer;" data-count="0"><h4>Size</h4><div class="downArrow"></div><div class="upArrow hidden"></div></div>
+			<div class="flex wrap hidden" id="sizeContainer">
 				<button id="sizeAllBtn" class="active" data-count="0" onclick="filterToggleSizeAll(event, 'button', '#101010')">All</button>
 				<button class="inactive sizeFilterBtn" data-count="1" onclick="filterToggleSize(event, 'button', '#101010')">Tiny</button>
 				<button class="inactive sizeFilterBtn" data-count="1" onclick="filterToggleSize(event, 'button', '#101010')">Small</button>

@@ -126,10 +126,6 @@ function buildMonsterCard(monster) {
     li.appendChild(hitDice)
 }
 
-    // "armor_class": 19,
-    // "hit_points": 195,
-    // "hit_dice": "17d12",
-
 async function getFetchAll(){
     let noMonsters = true
     monsterArray.forEach(el => {
@@ -241,6 +237,28 @@ function crEqual() {
         rangeBtn.classList.add("inactive")
         rangeBtn.dataset.count = 1
     } 
+}
+
+function toggleFilters(e) {
+    let target = e.target,
+        count = +target.dataset.count;
+    console.log(target)
+    let filtersDiv = target.nextElementSibling
+    let downArrow = target.getElementsByTagName('div')[0];
+    let upArrow = target.getElementsByTagName('div')[1]
+    if (count === 0) {
+        filtersDiv.classList.remove('hidden')
+        downArrow.classList.add('hidden')
+        upArrow.classList.remove('hidden')
+        target.dataset.count = 1
+        console.log(count)
+    } else if (count === 1) {
+        filtersDiv.classList.add('hidden')
+        downArrow.classList.remove('hidden')
+        upArrow.classList.add('hidden')
+        target.dataset.count = 0
+        console.log(count)
+    }
 }
 
 function filterToggleType(e, btn, color) {

@@ -5,6 +5,7 @@
 /* Box Model Hack */
 *{
   box-sizing: border-box;
+  zoom: 107%;
 }
 
 /******************************************
@@ -69,6 +70,21 @@ h1 {
 h1, h2, h3, h4, p, span {
   color: white;
 }
+
+h4 {
+  width: fit-content;
+  margin: 10px;
+}
+
+#typeFilterContainer, #sizeFilterContainer {
+  border-bottom: #E00D0C 1px solid;
+}
+
+#typesContainer {
+
+}
+
+
 
 #fetchRandomBtn {
   width: fit-content;
@@ -160,15 +176,34 @@ button {
   
 }
 
-.arrow {
-  box-sizing: border-box;
-  height: 5vw;
-  width: 5vw;
+.downArrow {
+  display: flex;
+  height: 12px;
+  width: 12px;
   border-style: solid;
   border-color: white;
   border-width: 0px 1px 1px 0px;
   transform: rotate(45deg);
   transition: border-width 150ms ease-in-out;
+  margin: 10px 0;
+}
+
+.upArrow {
+  display: flex;
+  height: 12px;
+  width: 12px;
+  border-style: solid;
+  border-color: white;
+  border-width: 0px 1px 1px 0px;
+  transition: border-width 150ms ease-in-out;
+  margin: 10px 0;
+  transform: rotate(225deg);
+  position: relative;
+  top: 6px;
+}
+
+.hidden {
+  display: none;
 }
 
 /******************************************
